@@ -62,8 +62,9 @@ for j in var.seed:
     
     for i in var.cont_list:
         
-        trjfile = '../cont_' + str(i) + '/seed' + str(j) + '/prod.lammpstrj'
-        
+        #trjfile = '../cont_' + str(i) + '/seed' + str(j) + '/prod.lammpstrj'
+        trjfile = f"{var.parent}/{var.main}/cont_{i}/seed{j}/prod.lammpstrj"
+
         Natoms, Nline_frame, Nframes = param_collect(trjfile)
         
         skip = skip_header(Nline_frame, Nframes)
@@ -73,6 +74,7 @@ for j in var.seed:
         t = var.t_cpt * np.arange(Nframes)  # t axis for each simulation
         t_dimless = t / var.t_box 
 
-        np.savez('unwrap_cont'+str(i)+'_seed'+str(j), cont1=xy_unwrap_cont1, cont2=xy_unwrap_cont2, t_dimless=t_dimless)
+        #np.savez('unwrap_cont'+str(i)+'_seed'+str(j), cont1=xy_unwrap_cont1, cont2=xy_unwrap_cont2, t_dimless=t_dimless)
+        np.savez(f"{var.parent}/{var.main}/post/unwrap_cont{i}_seed{j}", cont1=xy_unwrap_cont1, cont2=xy_unwrap_cont2, t_dimless=t_dimless)
         print('Kcont = {}, Seed {} unwrapping complete!'.format(i, j))
 
